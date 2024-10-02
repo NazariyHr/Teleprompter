@@ -10,6 +10,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -18,6 +21,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.test.teleprompter.presentation.common.theme.MainBgColor
 import com.test.teleprompter.presentation.common.theme.TeleprompterTheme
+import com.test.teleprompter.presentation.features.main.components.AlertDialogChooseScenario
+import com.test.teleprompter.presentation.features.scenarios.components.AlertDialogEnterScenario
 import com.test.teleprompter.presentation.navigation.Screen
 
 @Composable
@@ -42,6 +47,9 @@ private fun MainScreen(
     navigate: (Screen) -> Unit,
     onAction: (MainScreenAction) -> Unit
 ) {
+    var showChooseScenarioDialog by rememberSaveable { mutableStateOf(false) }
+    var showEnterScenarioDialog by rememberSaveable { mutableStateOf(false) }
+
     Scaffold { paddingValues ->
         Column(
             modifier = Modifier
@@ -52,7 +60,7 @@ private fun MainScreen(
         ) {
             Button(
                 onClick = {
-                    //todo show popup to choose scenario
+                    showChooseScenarioDialog = true
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {
@@ -66,6 +74,34 @@ private fun MainScreen(
             ) {
                 Text(text = "Мои сценарии")
             }
+        }
+
+        if (showChooseScenarioDialog) {
+            AlertDialogChooseScenario(
+                onDismissRequest = { showChooseScenarioDialog = false },
+                scenarios = state.scenarios,
+                onChoose = { scenario ->
+                    navigate(Screen.RecordVideo(scenario.id))
+                    showChooseScenarioDialog = false
+                },
+                onAddScenario = {
+                    showEnterScenarioDialog = true
+                }
+            )
+        }
+        if (showEnterScenarioDialog) {
+            AlertDialogEnterScenario(
+                onDismissRequest = { showEnterScenarioDialog = false },
+                onAdd = { title, text ->
+                    onAction(
+                        MainScreenAction.OnAddScenario(
+                            title = title,
+                            text = text
+                        )
+                    )
+                    showEnterScenarioDialog = false
+                }
+            )
         }
     }
 }
