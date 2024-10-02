@@ -43,7 +43,10 @@ class ScenariosViewModel @Inject constructor(
         when (action) {
             is ScenariosScreenAction.OnAddScenario -> {
                 viewModelScope.launch {
-                    scenarioRepository.addNewScenario(action.text)
+                    scenarioRepository.addNewScenario(
+                        title = action.title,
+                        text = action.text
+                    )
                 }
             }
 

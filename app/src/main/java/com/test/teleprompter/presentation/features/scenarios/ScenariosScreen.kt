@@ -101,8 +101,13 @@ private fun MainScreen(
             if (showEnterScenarioDialog) {
                 AlertDialogEnterScenario(
                     onDismissRequest = { showEnterScenarioDialog = false },
-                    onAdd = {
-                        onAction(ScenariosScreenAction.OnAddScenario(it))
+                    onAdd = { title, text ->
+                        onAction(
+                            ScenariosScreenAction.OnAddScenario(
+                                title = title,
+                                text = text
+                            )
+                        )
                         showEnterScenarioDialog = false
                     }
                 )

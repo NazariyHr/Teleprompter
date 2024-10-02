@@ -12,8 +12,8 @@ class ScenariosRepositoryImpl(
     private val scenarioDatabase: ScenarioDatabase
 ) : ScenarioRepository {
 
-    override suspend fun addNewScenario(text: String) {
-        scenarioDatabase.scenarioDao.insert(ScenarioEntity(0, text))
+    override suspend fun addNewScenario(title: String, text: String) {
+        scenarioDatabase.scenarioDao.insert(ScenarioEntity(0, title, text))
     }
 
     override fun getAllScenariosFlow(): Flow<List<Scenario>> =

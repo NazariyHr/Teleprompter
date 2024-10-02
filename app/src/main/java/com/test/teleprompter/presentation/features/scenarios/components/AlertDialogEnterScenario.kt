@@ -1,5 +1,6 @@
 package com.test.teleprompter.presentation.features.scenarios.components
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -13,8 +14,11 @@ import androidx.compose.runtime.setValue
 @Composable
 fun AlertDialogEnterScenario(
     onDismissRequest: () -> Unit,
-    onAdd: (text: String) -> Unit
+    onAdd: (title: String, text: String) -> Unit
 ) {
+    var title by rememberSaveable {
+        mutableStateOf("")
+    }
     var text by rememberSaveable {
         mutableStateOf("")
     }
@@ -24,12 +28,26 @@ fun AlertDialogEnterScenario(
             Text(text = "Add scenario")
         },
         text = {
-            TextField(
-                value = text,
-                onValueChange = { value ->
-                    text = value
-                }
-            )
+            Column {
+                TextField(
+                    value = title,
+                    onValueChange = { value ->
+                        title = value
+                    },
+                    label = {
+                        Text(text = "title")
+                    }
+                )
+                TextField(
+                    value = text,
+                    onValueChange = { value ->
+                        text = value
+                    },
+                    label = {
+                        Text(text = "text")
+                    }
+                )
+            }
         },
         onDismissRequest = {
             onDismissRequest()
@@ -37,8 +55,9 @@ fun AlertDialogEnterScenario(
         confirmButton = {
             TextButton(
                 onClick = {
-                    onAdd(text)
-                }
+                    onAdd(title, text)
+                },
+                enabled = title.isNotEmpty() && text.isNotEmpty()
             ) {
                 Text("Save")
             }

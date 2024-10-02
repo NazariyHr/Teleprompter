@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -13,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.test.teleprompter.R
@@ -48,7 +50,13 @@ fun ScenarioItem(
             painter = painterResource(id = R.drawable.remove),
             contentDescription = "Remove scenario ${scenario.id}"
         )
-        Text(text = scenario.text)
+        Column {
+            Text(
+                text = scenario.title,
+                fontWeight = FontWeight.Bold
+            )
+            Text(text = scenario.text)
+        }
     }
 }
 
@@ -57,7 +65,7 @@ fun ScenarioItem(
 private fun ScenarioItemPreview() {
     TeleprompterTheme {
         ScenarioItem(
-            scenario = Scenario(0, "Some text"),
+            scenario = Scenario(0, "Some title", "Some text"),
             onRemoveClicked = {}
         )
     }
