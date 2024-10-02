@@ -23,4 +23,8 @@ class ScenariosRepositoryImpl(
     override suspend fun removeScenario(id: Int) {
         scenarioDatabase.scenarioDao.delete(id)
     }
+
+    override suspend fun getScenario(id: Int): Scenario {
+        return scenarioDatabase.scenarioDao.get(id).toScenario()
+    }
 }

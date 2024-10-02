@@ -17,6 +17,9 @@ interface ScenarioDao {
     @Query("select * from scenarioentity")
     fun getAllFlow(): Flow<List<ScenarioEntity>>
 
+    @Query("select * from scenarioentity where id = :scenarioId limit 1")
+    suspend fun get(scenarioId: Int): ScenarioEntity
+
     @Query("delete from scenarioentity where id = :scenarioId")
     suspend fun delete(scenarioId: Int)
 }

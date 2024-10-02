@@ -1,6 +1,11 @@
 package com.test.teleprompter.presentation.features.main
 
+import android.Manifest
+import android.content.pm.PackageManager
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,9 +18,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
@@ -47,32 +55,78 @@ private fun MainScreen(
     navigate: (Screen) -> Unit,
     onAction: (MainScreenAction) -> Unit
 ) {
+    val context = LocalContext.current
+
     var showChooseScenarioDialog by rememberSaveable { mutableStateOf(false) }
     var showEnterScenarioDialog by rememberSaveable { mutableStateOf(false) }
 
+    var permissionsGranted by rememberSaveable {
+        mutableStateOf(false)
+    }
+
+    val requestPermissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestMultiplePermissions(),
+        onResult = { permissions ->
+            permissionsGranted = permissions.values.all { it }
+            if (permissionsGranted) {
+                showChooseScenarioDialog = true
+            }
+        }
+    )
+
     Scaffold { paddingValues ->
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
                 .background(color = MainBgColor)
                 .padding(paddingValues)
                 .padding(horizontal = 12.dp)
         ) {
-            Button(
-                onClick = {
-                    showChooseScenarioDialog = true
-                },
-                modifier = Modifier.fillMaxWidth()
+            Box(
+                modifier = Modifier.align(Alignment.Center)
             ) {
-                Text(text = "Новая запись")
-            }
-            Button(
-                onClick = {
-                    navigate(Screen.Scenarios)
-                },
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(text = "Мои сценарии")
+                Column {
+                    Button(
+                        onClick = {
+                            val cameraPermissionGranted = ContextCompat.checkSelfPermission(
+                                context,
+                                Manifest.permission.CAMERA
+                            ) == PackageManager.PERMISSION_GRANTED
+                            val recordAudioPermissionGranted = ContextCompat.checkSelfPermission(
+                                context,
+                                Manifest.permission.RECORD_AUDIO
+                            ) == PackageManager.PERMISSION_GRANTED
+                            val writeStoragePermissionGranted = ContextCompat.checkSelfPermission(
+                                context,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                            ) == PackageManager.PERMISSION_GRANTED
+                            permissionsGranted =
+                                cameraPermissionGranted && recordAudioPermissionGranted && writeStoragePermissionGranted
+                            if (cameraPermissionGranted) {
+                                showChooseScenarioDialog = true
+                            } else {
+                                requestPermissionLauncher.launch(
+                                    arrayOf(
+                                        Manifest.permission.CAMERA,
+                                        Manifest.permission.RECORD_AUDIO,
+                                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                                    )
+                                )
+                            }
+                        },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(text = "Новая запись")
+                    }
+                    Button(
+                        onClick = {
+                            navigate(Screen.Scenarios)
+                        },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(text = "Мои сценарии")
+                    }
+                }
             }
         }
 
