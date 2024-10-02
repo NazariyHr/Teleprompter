@@ -3,8 +3,11 @@ package com.test.teleprompter.presentation.features.main
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -15,6 +18,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.test.teleprompter.presentation.common.theme.MainBgColor
 import com.test.teleprompter.presentation.common.theme.TeleprompterTheme
+import com.test.teleprompter.presentation.navigation.Screen
 
 @Composable
 fun MainScreenRoot(
@@ -25,6 +29,9 @@ fun MainScreenRoot(
     val state by viewModel.state.collectAsStateWithLifecycle()
     MainScreen(
         state = state,
+        navigate = {
+            navController.navigate(it)
+        },
         onAction = viewModel::onAction
     )
 }
@@ -32,6 +39,7 @@ fun MainScreenRoot(
 @Composable
 private fun MainScreen(
     state: MainScreenState,
+    navigate: (Screen) -> Unit,
     onAction: (MainScreenAction) -> Unit
 ) {
     Scaffold { paddingValues ->
@@ -42,7 +50,22 @@ private fun MainScreen(
                 .padding(paddingValues)
                 .padding(horizontal = 12.dp)
         ) {
-
+            Button(
+                onClick = {
+                    //todo show popup to choose scenario
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(text = "Новая запись")
+            }
+            Button(
+                onClick = {
+                    navigate(Screen.Scenarios)
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(text = "Мои сценарии")
+            }
         }
     }
 }
@@ -53,7 +76,8 @@ private fun MainScreenPreview() {
     TeleprompterTheme {
         MainScreen(
             state = MainScreenState(),
-            onAction = {}
+            onAction = {},
+            navigate = {}
         )
     }
 }

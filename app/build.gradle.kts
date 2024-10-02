@@ -90,4 +90,9 @@ dependencies {
 
     // Gson
     implementation(libs.gson)
+
+    // Room for local data base
+    implementation(libs.room)
+    implementation(libs.room.runtime)
+    ksp(libs.room.compiler)
 }
