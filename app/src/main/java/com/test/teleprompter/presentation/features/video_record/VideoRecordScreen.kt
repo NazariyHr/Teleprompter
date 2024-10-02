@@ -101,7 +101,7 @@ private fun VideoRecordScreen(
     }
     val maxYOffset by remember(d) {
         derivedStateOf {
-            with(d) { (100 - 24).dp.toPx() }
+            with(d) { (200 - 24).dp.toPx() }
         }
     }
     var yOffset by remember {
@@ -267,24 +267,10 @@ private fun VideoRecordScreen(
             }
 
             if (isRecording) {
-                Spacer(
-                    modifier = Modifier
-                        .size(10.dp)
-                        .padding(top = 12.dp)
-                        .background(
-                            color = Color.Red,
-                            shape = CircleShape
-                        )
-                        .align(Alignment.TopEnd)
-                )
-            }
-
-            if (isRecording) {
                 //speed
                 Column(
                     modifier = Modifier
-                        .padding(top = 24.dp)
-                        .align(Alignment.TopEnd)
+                        .align(Alignment.CenterEnd)
                 ) {
                     Icon(
                         modifier = Modifier.size(24.dp),
@@ -295,7 +281,7 @@ private fun VideoRecordScreen(
                         modifier = Modifier
                             .padding(top = 4.dp)
                             .width(24.dp)
-                            .height(100.dp)
+                            .height(200.dp)
                             .pointerInput(true) {
                                 detectDragGestures { change, dragAmount ->
                                     change.consume()
@@ -331,6 +317,19 @@ private fun VideoRecordScreen(
                             }
                     )
                 }
+            }
+
+            if (isRecording) {
+                Spacer(
+                    modifier = Modifier
+                        .padding(top = 12.dp)
+                        .background(
+                            color = Color.Red,
+                            shape = CircleShape
+                        )
+                        .size(10.dp)
+                        .align(Alignment.TopEnd)
+                )
             }
         }
     }
