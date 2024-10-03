@@ -32,8 +32,4 @@ class VideoRecordViewModel @Inject constructor(
             stateValue = stateValue.copy(scenario = s)
         }
     }
-
-    fun onAction(action: VideoRecordScreenAction) {
-
-    }
 }

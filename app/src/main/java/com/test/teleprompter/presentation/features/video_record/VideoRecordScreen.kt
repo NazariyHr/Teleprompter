@@ -1,5 +1,6 @@
 package com.test.teleprompter.presentation.features.video_record
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.os.Build
 import android.provider.MediaStore
@@ -48,6 +49,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -71,15 +73,14 @@ fun VideoRecordScreenRoot(
     val state by viewModel.state.collectAsStateWithLifecycle()
     viewModel.saveScenario(scenarioId)
     VideoRecordScreen(
-        state = state,
-        onAction = viewModel::onAction
+        state = state
     )
 }
 
+@SuppressLint("MissingPermission")
 @Composable
 private fun VideoRecordScreen(
-    state: VideoRecordScreenState,
-    onAction: (VideoRecordScreenAction) -> Unit
+    state: VideoRecordScreenState
 ) {
     val context = LocalContext.current
     var recording by remember { mutableStateOf<Recording?>(null) }
@@ -249,7 +250,7 @@ private fun VideoRecordScreen(
                                         }
                                 }
                             ) {
-                                Text(text = "Start")
+                                Text(text = stringResource(id = R.string.start))
                             }
                         }
                         if (isRecording) {
@@ -259,7 +260,7 @@ private fun VideoRecordScreen(
                                     recording?.stop()
                                 }
                             ) {
-                                Text(text = "Stop")
+                                Text(text = stringResource(id = R.string.stop))
                             }
                         }
                     }
@@ -340,8 +341,7 @@ private fun VideoRecordScreen(
 private fun MainScreenPreview() {
     TeleprompterTheme {
         VideoRecordScreen(
-            state = VideoRecordScreenState(),
-            onAction = {}
+            state = VideoRecordScreenState()
         )
     }
 }

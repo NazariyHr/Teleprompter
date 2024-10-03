@@ -10,7 +10,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.test.teleprompter.R
 import com.test.teleprompter.domain.model.Scenario
 
 @Composable
@@ -22,7 +24,7 @@ fun AlertDialogChooseScenario(
 ) {
     AlertDialog(
         title = {
-            Text(text = "Choose scenario")
+            Text(text = stringResource(id = R.string.choose_scenario))
         },
         text = {
             if (scenarios.isEmpty()) {
@@ -32,7 +34,7 @@ fun AlertDialogChooseScenario(
                     },
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text("Добавьте сценарий")
+                    Text(stringResource(id = R.string.add_scenario))
                 }
             } else {
                 LazyColumn(
@@ -53,7 +55,7 @@ fun AlertDialogChooseScenario(
                     onDismissRequest()
                 }
             ) {
-                Text("Cancel")
+                Text(stringResource(id = R.string.cancel))
             }
         }
     )

@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Teleprompter</string>
+
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
+    <string name="scenarios">Scenarios</string>
+    <string name="add_scenario">Add scenario</string>
+    <string name="title">title</string>
+    <string name="text">text</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="new_record">New record</string>
+    <string name="my_scenarios">My scenarios</string>
+    <string name="choose_scenario">Choose scenario</string>
+
+
 </resources>

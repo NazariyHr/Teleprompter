@@ -21,12 +21,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.test.teleprompter.R
 import com.test.teleprompter.presentation.common.theme.MainBgColor
 import com.test.teleprompter.presentation.common.theme.TeleprompterTheme
 import com.test.teleprompter.presentation.features.main.components.AlertDialogChooseScenario
@@ -116,7 +118,7 @@ private fun MainScreen(
                         },
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Text(text = "Новая запись")
+                        Text(text = stringResource(id = R.string.new_record))
                     }
                     Button(
                         onClick = {
@@ -124,7 +126,7 @@ private fun MainScreen(
                         },
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Text(text = "Мои сценарии")
+                        Text(text = stringResource(id = R.string.my_scenarios))
                     }
                 }
             }

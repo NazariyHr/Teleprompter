@@ -10,6 +10,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.res.stringResource
+import com.test.teleprompter.R
 
 @Composable
 fun AlertDialogEnterScenario(
@@ -25,7 +27,7 @@ fun AlertDialogEnterScenario(
 
     AlertDialog(
         title = {
-            Text(text = "Add scenario")
+            Text(text = stringResource(id = R.string.add_scenario))
         },
         text = {
             Column {
@@ -35,7 +37,7 @@ fun AlertDialogEnterScenario(
                         title = value
                     },
                     label = {
-                        Text(text = "title")
+                        Text(text = stringResource(id = R.string.title))
                     }
                 )
                 TextField(
@@ -44,7 +46,7 @@ fun AlertDialogEnterScenario(
                         text = value
                     },
                     label = {
-                        Text(text = "text")
+                        Text(text = stringResource(id = R.string.text))
                     }
                 )
             }
@@ -59,7 +61,7 @@ fun AlertDialogEnterScenario(
                 },
                 enabled = title.isNotEmpty() && text.isNotEmpty()
             ) {
-                Text("Save")
+                Text(stringResource(id = R.string.save))
             }
         },
         dismissButton = {
@@ -68,7 +70,7 @@ fun AlertDialogEnterScenario(
                     onDismissRequest()
                 }
             ) {
-                Text("Cancel")
+                Text(stringResource(id = R.string.cancel))
             }
         }
     )
