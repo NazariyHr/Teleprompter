@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Teleprompter"
+rootProject.name = "TeleRead"
 include(":app")

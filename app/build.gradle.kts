@@ -9,11 +9,11 @@ plugins {
 }
 
 android {
-    namespace = "com.test.teleprompter"
+    namespace = "tele.read.adamkorol"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.test.teleprompter"
+        applicationId = "tele.read.adamkorol"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

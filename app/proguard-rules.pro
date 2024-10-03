@@ -37,10 +37,10 @@
 
 -keep public class p3.internal.connection.* {*;}
 
--keep public class com.test.teleprompter.presentation.navigation.** {*;}
+-keep public class tele.read.adamkorol.presentation.navigation.** {*;}
 
--keep public class com.test.teleprompter.domain.model.** {*;}
+-keep public class tele.read.adamkorol.domain.model.** {*;}
 
--keep public class com.test.teleprompter.data.entity.** {*;}
+-keep public class tele.read.adamkorol.data.entity.** {*;}
 
--keep public class com.test.teleprompter.data.dao.** {*;}
+-keep public class tele.read.adamkorol.data.dao.** {*;}
